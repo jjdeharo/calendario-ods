@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later · Contenidos: CC-BY-SA-4.0 -->
+<!-- SPDX-FileCopyrightText: 2025 Juan José de Haro -->
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -883,9 +885,11 @@
     
     <footer>
         <div class="container">
-            <p><a href="https://labia.tiddlyhost.com" target="_blank">Laboratorio de aplicaciones educativas</a></p>
-            <p><a href="https://bilateria.org" target="_blank">Aplicación hecha por Juan José de Haro</a></p>
-            <p><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" target="_blank">Esta obra está bajo una licencia Creative Commons BY-SA</a></p>
+            <p>© <a href="https://bilateria.org" target="_blank" rel="noopener">Juan José de Haro</a> ·
+                <span id="footer-code">Licencia del código:</span>
+                <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">AGPL v3</a> ·
+                <span id="footer-content">Contenidos:</span>
+                <a id="footer-cc" href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" target="_blank" rel="noopener">CC BY-SA 4.0</a></p>
         </div>
     </footer>
 
@@ -893,8 +897,6 @@
         // Configuración de idiomas
         const translations = {
             es: {
-        warning: "Nota: en obrir diverses finestres de xatbots, el navegador pot impedir l'obertura de noves finestres emergents. Si passa, autoritza els pop-ups des de la barra d'adreces.",
-
                 title: "Calendario ODS",
                 odsTitle: "Filtrar ODS",
                 favoritesTitle: "Favoritos",
@@ -913,13 +915,14 @@
                 totalEvents: "eventos encontrados",
                 jumpToDate: "Ir a esta fecha",
                 todayBtn: "Hoy",
+                footerCode: "Licencia del código:",
+                footerContent: "Contenidos:",
+                ccDeed: "https://creativecommons.org/licenses/by-sa/4.0/deed.es",
                 helpTitle: "¿Qué es esta aplicación?",
                 helpText: `Esta herramienta ofrece un calendario escolar con efemérides y días internacionales vinculados a los Objetivos de Desarrollo Sostenible (ODS). 
 Puedes filtrar por ODS, consultar ideas de actividades para el aula y marcar tus fechas favoritas para acceder rápido.`,
             },
             ca: {
-        warning: "Nota: en obrir diverses finestres de xatbots, el navegador pot impedir l'obertura de noves finestres emergents. Si passa, autoritza els pop-ups des de la barra d'adreces.",
-
                 title: "Calendari ODS",
                 odsTitle: "Filtrar ODS",
                 favoritesTitle: "Favorits",
@@ -938,6 +941,9 @@ Puedes filtrar por ODS, consultar ideas de actividades para el aula y marcar tus
                 totalEvents: "esdeveniments trobats",
                 jumpToDate: "Anar a aquesta data",
                 todayBtn: "Avui",
+                footerCode: "Llicència del codi:",
+                footerContent: "Continguts:",
+                ccDeed: "https://creativecommons.org/licenses/by-sa/4.0/deed.ca",
                 helpTitle: "Què és aquesta aplicació?",
                 helpText: `Aquesta eina mostra un calendari escolar amb efemèrides i dies internacionals relacionats amb els Objectius de Desenvolupament Sostenible (ODS).
 Pots filtrar per ODS, consultar idees d'activitats per a l'aula i desar les teves dates preferides per accedir-hi ràpidament.`,
@@ -948,14 +954,19 @@ Pots filtrar per ODS, consultar idees d'activitats per a l'aula i desar les teve
         const ODS_DATA_URL = 'ods-data.json';
         const EVENTS_DATA_URL = 'events-data.json';
 
-        /* === Base URLs de chatbots === */
+        /* === Direcciones de los chatbots (comprobadas el 28-10-2026) ===
+           Los que terminan en ?q= reciben la petición ya escrita; en los demás
+           hay que pegarla, porque ignoran el parámetro o no está documentado. */
         const chatbotBaseURLs = {
             chatgpt: 'https://chatgpt.com/?q=',
-            grok: 'https://grok.com/?q=',
-            lechat: 'https://chat.mistral.ai/chat/?q=',
-            copilot: 'https://copilot.microsoft.com/?q=',
+            claude: 'https://claude.ai/new?q=',
+            gemini: 'https://gemini.google.com/app',
+            copilot: 'https://copilot.microsoft.com/',
             perplexity: 'https://www.perplexity.ai/?q=',
-            claude: 'https://claude.ai/new?q='
+            grok: 'https://grok.com/?q=',
+            lechat: 'https://chat.mistral.ai/chat',
+            deepseek: 'https://chat.deepseek.com/',
+            duckai: 'https://duck.ai/?q='
         };
 
         /* === Traducciones para modal de chatbot === */
@@ -963,28 +974,27 @@ Pots filtrar per ODS, consultar idees d'activitats per a l'aula i desar les teve
         
         const chatbotTranslations = {
             es: {
-        warning: "Nota: en obrir diverses finestres de xatbots, el navegador pot impedir l'obertura de noves finestres emergents. Si passa, autoritza els pop-ups des de la barra d'adreces.",
-
-                title: 'Selecciona un chatbot',
+                title: 'Selecciona uno o varios chatbots',
                 cancel: 'Cancelar',
-                loginHint: 'Debes haber iniciado sesión previamente en el chatbot seleccionado para que funcione correctamente.'
+                loginHint: 'La petición se copia al portapapeles. Si el chatbot no la muestra ya escrita, pégala con Ctrl+V. Algunos chatbots piden iniciar sesión.'
             },
             ca: {
-        warning: "Nota: en obrir diverses finestres de xatbots, el navegador pot impedir l'obertura de noves finestres emergents. Si passa, autoritza els pop-ups des de la barra d'adreces.",
-
-                title: 'Selecciona un xatbot',
-                cancel: 'Cancel·lar',
-                loginHint: 'Has d’haver iniciat sessió prèviament en el xatbot seleccionat perquè funcioni correctament.'
+                title: 'Selecciona un o diversos xatbots',
+                cancel: 'Cancel·la',
+                loginHint: "La petició es copia al porta-retalls. Si el xatbot no la mostra ja escrita, enganxa-la amb Ctrl+V. Alguns xatbots demanen iniciar sessió."
             }
         };
 
 const chatbotNames = {
             chatgpt : 'ChatGPT',
-            grok : 'Grok',
-            lechat : 'Le Chat',
+            claude : 'Claude',
+            gemini : 'Gemini',
             copilot : 'Copilot',
             perplexity : 'Perplexity',
-            claude : 'Claude'
+            grok : 'Grok',
+            lechat : 'Le Chat',
+            deepseek : 'DeepSeek',
+            duckai : 'Duck.ai'
         };
 
         function construirURLPrompt(chatbot, prompt) {
@@ -992,8 +1002,8 @@ const chatbotNames = {
                 console.error(`Chatbot "${chatbot}" no soportado.`);
                 return null;
             }
-            const promptCodificado = encodeURIComponent(prompt);
-            return chatbotBaseURLs[chatbot] + promptCodificado;
+            const base = chatbotBaseURLs[chatbot];
+            return base.endsWith('?q=') ? base + encodeURIComponent(prompt) : base;
         }
 
         function abrirURLChatbot(url) {
@@ -1044,14 +1054,13 @@ const chatbotNames = {
                 const selected = Array.from(document.querySelectorAll('.chatbot-checkbox:checked')).map(cb => cb.value);
                 if (selected.length === 0) return;
                 const level = levelInputEl.value.trim();
-                selected.forEach(id => {
-                    let finalPrompt = prompt;
-                    if (level) {
-                        const prefix = (currentLang === 'ca') ? `Nivell educatiu o edat de l\'alumnat: ${level}\n\n` : `Nivel educativo o edad del alumnado: ${level}\n\n`;
-                        finalPrompt = prefix + prompt;
-                    }
-                    enviarPromptAChatbot(id, finalPrompt);
-                });
+                let finalPrompt = prompt;
+                if (level) {
+                    const prefix = (currentLang === 'ca') ? `Nivell educatiu o edat de l\'alumnat: ${level}\n\n` : `Nivel educativo o edad del alumnado: ${level}\n\n`;
+                    finalPrompt = prefix + prompt;
+                }
+                if (navigator.clipboard) navigator.clipboard.writeText(finalPrompt).catch(() => {});
+                selected.forEach(id => enviarPromptAChatbot(id, finalPrompt));
                 hideChatbotModal();
             };
             const warningEl = document.getElementById('chatbot-warning');
@@ -1248,6 +1257,9 @@ Adapta el lenguaje y la complejidad al nivel educativo o edad del alumnado.`;
             document.getElementById('no-favorites').textContent = translations[lang].noFavorites;
             document.getElementById('show-ods-info').textContent = translations[lang].showOdsInfo;
             document.getElementById('ods-dates-title').textContent = translations[lang].odsDatesTitle;
+            document.getElementById('footer-code').textContent = translations[lang].footerCode;
+            document.getElementById('footer-content').textContent = translations[lang].footerContent;
+            document.getElementById('footer-cc').href = translations[lang].ccDeed;
             
             // Actualizar nombre del mes
             updateMonthDisplay();

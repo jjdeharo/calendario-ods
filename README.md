@@ -21,4 +21,5 @@ python3 -m http.server 8000
 
 Aplicación de Juan José de Haro ([@jjdeharo](https://bilateria.org)), creada en cocreación con IA ([MIAE, nivel 4](https://jjdeharo.github.io/miae/?nivel=4)).
 
-Licencia [CC BY-SA 4.0](LICENSE).
+- Código: [AGPL v3](LICENSE).
+- Contenidos (textos, datos de los ODS y de los días internacionales, actividades propuestas): [CC BY-SA 4.0](LICENSES/CC-BY-SA-4.0.txt).
