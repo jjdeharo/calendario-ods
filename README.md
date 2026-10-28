@@ -2,7 +2,9 @@
 
 Calendario de los días internacionales relacionados con los Objetivos de Desarrollo Sostenible (ODS), con propuestas de actividades para el aula y la opción de abrir un chatbot de IA con una petición ya preparada para crear una actividad. En castellano y catalán.
 
-Versión en uso: <https://bilateria.org/app/ods/>
+Web: <https://jjdeharo.github.io/calendario-ods/>
+
+La dirección anterior, <https://bilateria.org/app/ods/>, redirige aquí.
 
 ## Cómo funciona
 
